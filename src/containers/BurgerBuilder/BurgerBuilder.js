@@ -4,6 +4,8 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
+import axiosInstance from "../../axios-order";
+import Loader from "../../components/UI/Loader/Loader";
 
 const INGREDIENT_PRICE = {
     salad: 0.5,
@@ -14,16 +16,18 @@ const INGREDIENT_PRICE = {
 
 class BurgerBuilder extends Component {
     state = {
-        ingredients: {
-            salad: 0,
-            bacon: 0,
-            cheese: 0,
-            meat: 0,
-        },
+        ingredients: null,
         totalPrice: 4,
         purchasable: false,
         purchasing: false,
+        loading: false,
     };
+
+    componentDidMount() {
+        axiosInstance.get("/ingredient.json").then((response) => {
+            this.setState({ ingredients: response.data });
+        });
+    }
 
     updatePurchaseState = (updateIngedients) => {
         let sum = Object.keys(updateIngedients)
@@ -76,7 +80,28 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
-        alert("you continue..");
+        this.setState({ loading: true });
+        const ordereDetail = {
+            ingredients: this.state.ingredients,
+            totalPrice: this.state.totalPrice.toFixed(2),
+            customer: {
+                address: {
+                    name: "Assit test",
+                    street: "Test street",
+                    pin: "123456",
+                },
+                mailId: "asit@test.com",
+            },
+            deliveryMethod: "fastest",
+        };
+        axiosInstance
+            .post("/orders.json", ordereDetail)
+            .then((response) => {
+                this.setState({ loading: false, purchasing: false });
+            })
+            .catch((error) => {
+                this.setState({ loading: false, purchasing: false });
+            });
     };
 
     render() {
@@ -86,28 +111,46 @@ class BurgerBuilder extends Component {
         for (let key in disabledInfo) {
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
+        let modalContent = null;
+        let burger = <Loader />;
+
+        if (this.state.ingredients) {
+            burger = (
+                <Aux>
+                    <Burger ingredients={this.state.ingredients} />
+                    <BuildControls
+                        ingredientAdded={this.addIngredientHandler}
+                        ingredientRemoved={this.removeIngredientHandler}
+                        disabledData={disabledInfo}
+                        price={this.state.totalPrice}
+                        purchasable={this.state.purchasable}
+                        ordered={this.purchaseHandler}
+                    />
+                </Aux>
+            );
+            modalContent = (
+                <OrderSummary
+                    price={this.state.totalPrice}
+                    ingredients={this.state.ingredients}
+                    purchaseCancelled={this.purchaseCancelHandler}
+                    purchaseContinue={this.purchaseContinueHandler}
+                />
+            );
+        }
+
+        if (this.state.loading) {
+            modalContent = <Loader />;
+        }
+
         return (
             <Aux>
                 <Modal
                     show={this.state.purchasing}
                     modalClosed={this.purchaseCancelHandler}
                 >
-                    <OrderSummary
-                        price={this.state.totalPrice}
-                        ingredients={this.state.ingredients}
-                        purchaseCancelled={this.purchaseCancelHandler}
-                        purchaseContinue={this.purchaseContinueHandler}
-                    />
+                    {modalContent}
                 </Modal>
-                <Burger ingredients={this.state.ingredients} />
-                <BuildControls
-                    ingredientAdded={this.addIngredientHandler}
-                    ingredientRemoved={this.removeIngredientHandler}
-                    disabledData={disabledInfo}
-                    price={this.state.totalPrice}
-                    purchasable={this.state.purchasable}
-                    ordered={this.purchaseHandler}
-                />
+                {burger}
             </Aux>
         );
     }

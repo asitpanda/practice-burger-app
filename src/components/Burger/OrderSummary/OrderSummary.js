@@ -15,6 +15,7 @@ class OrderSummary extends Component {
                         <span style={{ textTransform: "capitalize" }}>
                             {igKey}
                         </span>
+                        : {this.props.ingredients[igKey]}
                     </li>
                 );
             }
