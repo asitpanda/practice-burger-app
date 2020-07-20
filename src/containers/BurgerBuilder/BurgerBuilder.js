@@ -6,7 +6,7 @@ import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axiosInstance from "../../axios-order";
 import Loader from "../../components/UI/Loader/Loader";
-import * as actionTypes from "../../store/actions";
+import * as actionTypes from "../../store/actions/index";
 import { connect } from "react-redux";
 
 class BurgerBuilder extends Component {
@@ -17,7 +17,7 @@ class BurgerBuilder extends Component {
 
     componentDidMount() {
         axiosInstance.get("/ingredient.json").then((response) => {
-            this.setState({ ingredients: response.data });
+            this.props.setIngredient(response.data);
         });
     }
 
@@ -94,16 +94,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addIngredient: (type) =>
-            dispatch({
-                type: actionTypes.ADD_INGREDIENT,
-                ingredientType: type,
-            }),
+        addIngredient: (type) => dispatch(actionTypes.addIngredient(type)),
         removeIngredient: (type) =>
-            dispatch({
-                type: actionTypes.REMOVE_INGREDIENT,
-                ingredientType: type,
-            }),
+            dispatch(actionTypes.removeIngredient(type)),
+        setIngredient: (data) => dispatch(actionTypes.setIngredient(data)),
     };
 };
 

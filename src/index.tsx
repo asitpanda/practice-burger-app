@@ -5,10 +5,15 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { createStore } from "redux";
-import reducer from "./store/reducer";
+import { createStore, compose } from "redux";
+import reducer from "./store/reducers/reducer";
 
-const store = createStore(reducer);
+const store = createStore(
+    reducer,
+    ((window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+        (window as any).__REDUX_DEVTOOLS_EXTENSION__()) ||
+        compose
+);
 
 ReactDOM.render(
     <React.StrictMode>
