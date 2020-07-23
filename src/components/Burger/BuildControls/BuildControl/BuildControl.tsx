@@ -2,7 +2,14 @@ import React from "react";
 
 import "./BuildControl.css";
 
-const buildControl = (props) => (
+interface OwnProps {
+    label: string;
+    removed: () => void;
+    disabled: boolean;
+    added: () => void;
+}
+
+const buildControl = (props: OwnProps) => (
     <div className="BuildControl">
         <div className="Label">{props.label}</div>
         <button

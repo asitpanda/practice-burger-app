@@ -4,8 +4,13 @@ import Button from "../../../components/UI/Button/Button";
 import axiosInstance from "../../../axios-order";
 import Loader from "../../../components/UI/Loader/Loader";
 import { connect } from "react-redux";
+import TextField from "@material-ui/core/TextField";
+import { RootState, stateToProps } from "../../../model/ingredient";
+import { RouteComponentProps } from "react-router-dom";
 
-export class ContactData extends Component {
+type Props = stateToProps & RouteComponentProps;
+
+export class ContactData extends Component<Props> {
     state = {
         name: "",
         email: "",
@@ -13,9 +18,10 @@ export class ContactData extends Component {
             street: "",
             postalcode: "",
         },
+        loading: null,
     };
 
-    orderHandler = (event) => {
+    orderHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         this.setState({ loading: true });
@@ -43,13 +49,46 @@ export class ContactData extends Component {
             });
     };
 
+    nameValidate = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("");
+    };
+
     render() {
         let form = (
             <form>
-                <input type="text" name="name" placeholder="Your Name" />
+                {/* <input type="text" name="name" placeholder="Your Name" />
                 <input type="text" name="email" placeholder="Your Email" />
                 <input type="text" name="street" placeholder="Street Name" />
-                <input type="text" name="postal" placeholder="Postal Code" />
+                <input type="text" name="postal" placeholder="Postal Code" /> */}
+                <TextField
+                    id="email"
+                    placeholder="Enter your Name"
+                    label="Name"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    error
+                    helperText=""
+                    onChange={this.nameValidate}
+                />
+                <TextField
+                    id="email"
+                    placeholder="Enter your Email"
+                    label="Email"
+                    variant="outlined"
+                />
+                <TextField
+                    id="email"
+                    placeholder="Enter your Street"
+                    label="Street"
+                    variant="filled"
+                />
+                <TextField
+                    id="email"
+                    placeholder="Enter your PIN"
+                    label="Postal Code"
+                    variant="outlined"
+                />
                 <Button btnType="Success" clicked={this.orderHandler}>
                     ORDER
                 </Button>
@@ -67,7 +106,7 @@ export class ContactData extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
     return {
         ings: state.ingredients,
         totalPrice: state.totalPrice,

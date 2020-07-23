@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import * as CONSTANT from "../../../common.constant";
 import "./BurgerIngredient.css";
 
-class BurgerIngredient extends Component {
+interface OwnProps {
+    type: String;
+}
+
+class BurgerIngredient extends Component<OwnProps> {
+    static propTypes = {
+        type: PropTypes.string.isRequired,
+    };
     render() {
         let ingredient = null;
 
@@ -19,16 +26,16 @@ class BurgerIngredient extends Component {
                     </div>
                 );
                 break;
-            case "meat":
+            case CONSTANT.INGREDIENT.MEAT:
                 ingredient = <div className="Meat"></div>;
                 break;
-            case "cheese":
+            case CONSTANT.INGREDIENT.CHEESE:
                 ingredient = <div className="Cheese"></div>;
                 break;
-            case "salad":
+            case CONSTANT.INGREDIENT.SALAD:
                 ingredient = <div className="Salad"></div>;
                 break;
-            case "bacon":
+            case CONSTANT.INGREDIENT.BACON:
                 ingredient = <div className="Bacon"></div>;
                 break;
             default:
@@ -39,9 +46,5 @@ class BurgerIngredient extends Component {
         return ingredient;
     }
 }
-
-BurgerIngredient.propTypes = {
-    type: PropTypes.string.isRequired,
-};
 
 export default BurgerIngredient;

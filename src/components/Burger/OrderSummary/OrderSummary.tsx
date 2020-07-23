@@ -2,8 +2,14 @@ import React, { Component } from "react";
 
 import Aux from "../../../hoc/Aux/Aux";
 import Button from "../../UI/Button/Button";
+interface OwnProps {
+    ingredients: any;
+    price: number;
+    purchaseCancelled: () => void;
+    purchaseContinue: () => void;
+}
 
-class OrderSummary extends Component {
+class OrderSummary extends Component<OwnProps> {
     componentWillUpdate() {
         console.log("order summary update");
     }

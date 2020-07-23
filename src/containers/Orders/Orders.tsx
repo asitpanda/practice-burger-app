@@ -27,7 +27,7 @@ export class Orders extends Component {
     render() {
         return (
             <div>
-                {this.state.order.map((order) => (
+                {this.state.order.map((order: any) => (
                     <Order data={order} key={order.id} />
                 ))}
             </div>

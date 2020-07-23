@@ -3,8 +3,14 @@ import BackDrop from "../Backdrop/Backdrop";
 import Aux from "../../../hoc/Aux/Aux";
 import "./Modal.css";
 
-class Modal extends Component {
-    shouldComponentUpdate(nextProps, nextState) {
+interface OwnProp {
+    show: boolean;
+    children: React.ReactNode;
+    modalClosed: () => void;
+}
+
+class Modal extends Component<OwnProp> {
+    shouldComponentUpdate(nextProps: OwnProp, nextState: OwnProp) {
         return (
             nextProps.show !== this.props.show ||
             nextProps.children !== this.props.children

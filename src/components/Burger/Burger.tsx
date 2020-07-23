@@ -3,10 +3,13 @@ import React from "react";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 
 import "./Burger.css";
+interface OwnProps {
+    ingredients: any;
+}
 
-const burger = (props) => {
+const burger = (props: OwnProps) => {
     //TODO - Use lodash for below logic
-    let transformedIngredients = Object.keys(props.ingredients)
+    let transformedIngredients: any = Object.keys(props.ingredients)
         .map((igKey) => {
             return [...Array(props.ingredients[igKey])].map((_, i) => {
                 return <BurgerIngredient key={igKey + i} type={igKey} />;

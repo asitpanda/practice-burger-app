@@ -8,15 +8,30 @@ import axiosInstance from "../../axios-order";
 import Loader from "../../components/UI/Loader/Loader";
 import * as actionTypes from "../../store/actions/index";
 import { connect } from "react-redux";
+import { RootState, stateToProps } from "../../model/ingredient";
+import { RouteComponentProps } from "react-router-dom";
 
-class BurgerBuilder extends Component {
+interface DispatchProps {
+    addIngredient: (data: string) => void;
+    removeIngredient: (type: string) => void;
+    setIngredient: (type: string) => void;
+}
+
+interface OwnProps {
+    purchasing: boolean;
+    loading: boolean;
+}
+
+type Props = stateToProps & DispatchProps & OwnProps & RouteComponentProps;
+
+class BurgerBuilder extends Component<Props> {
     state = {
         purchasing: false,
         loading: false,
     };
 
     componentDidMount() {
-        axiosInstance.get("/ingredient.json").then((response) => {
+        axiosInstance.get("/ingredient.json").then((response: any) => {
             this.props.setIngredient(response.data);
         });
     }
@@ -85,20 +100,25 @@ class BurgerBuilder extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any): any => {
     return {
         ings: state.ingredients,
         totalPrice: state.totalPrice,
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: any) => {
     return {
-        addIngredient: (type) => dispatch(actionTypes.addIngredient(type)),
-        removeIngredient: (type) =>
+        addIngredient: (type: string) =>
+            dispatch(actionTypes.addIngredient(type)),
+        removeIngredient: (type: string) =>
             dispatch(actionTypes.removeIngredient(type)),
-        setIngredient: (data) => dispatch(actionTypes.setIngredient(data)),
+        setIngredient: (data: RootState) =>
+            dispatch(actionTypes.setIngredient(data)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);
+export default connect<DispatchProps & OwnProps>(
+    mapStateToProps,
+    mapDispatchToProps
+)(BurgerBuilder);

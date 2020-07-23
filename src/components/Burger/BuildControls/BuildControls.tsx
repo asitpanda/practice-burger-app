@@ -1,21 +1,28 @@
 import React from "react";
-
+import { Ingridient_control } from "../../../model/ingredient";
 import "./BuildControls.css";
 import BuildControl from "./BuildControl/BuildControl";
 
-const controls = [
-    { label: "Salad", type: "salad" },
-    { label: "Bacon", type: "bacon" },
-    { label: "Cheese", type: "cheese" },
-    { label: "Meat", type: "meat" },
-];
+interface OwnProps {
+    price?: any;
+    ingredientAdded: (type: string) => void;
+    ingredientRemoved: (type: string) => void;
+    disabledData: { [key: string]: boolean };
+    purchasable?: boolean;
+    ordered: () => void;
+}
 
-const buildControls = (props) => (
+interface uiCtrl {
+    label: string;
+    type: string;
+}
+
+const buildControls = (props: OwnProps) => (
     <div className="BuildControls">
         <p>
             Current Price: <strong>{props.price.toFixed(2)}</strong>
         </p>
-        {controls.map((ctrl) => (
+        {Ingridient_control.map((ctrl: uiCtrl) => (
             <BuildControl
                 key={ctrl.label}
                 label={ctrl.label}

@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, RouteComponentProps } from "react-router-dom";
 import ContactData from "./ContactData/ContactData";
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import { connect } from "react-redux";
+import { RootState, stateToProps } from "../../model/ingredient";
 
-export class Checkout extends Component {
+type Props = stateToProps & RouteComponentProps;
+
+export class Checkout extends Component<Props> {
     checkoutCancelHandler = () => {
         this.props.history.goBack();
     };
@@ -30,7 +33,7 @@ export class Checkout extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
     return {
         ings: state.ingredients,
     };

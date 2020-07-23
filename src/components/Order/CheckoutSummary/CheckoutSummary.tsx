@@ -2,8 +2,13 @@ import React from "react";
 import Burger from "../../Burger/Burger";
 import Button from "../../UI/Button/Button";
 import "./CheckoutSummary.css";
+interface OwnProps {
+    ingredients: any;
+    cancelHandler: () => void;
+    continueHandler: () => void;
+}
 
-const CheckoutSummary = (props) => {
+const CheckoutSummary = (props: OwnProps) => {
     return (
         <div className="CheckoutSummary">
             <h1>We hope it tastes well!</h1>

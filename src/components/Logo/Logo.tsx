@@ -2,7 +2,11 @@ import React from "react";
 import "./Logo.css";
 import burgerLogo from "../../assets/images/logo.png";
 
-const logo = (props) => (
+interface OwnProps {
+    height?: string;
+}
+
+const logo = (props: OwnProps) => (
     <div className="Logo" style={{ height: props.height }}>
         <img src={burgerLogo} alt="Burger Logo" />
     </div>

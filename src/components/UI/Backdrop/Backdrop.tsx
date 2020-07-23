@@ -1,7 +1,10 @@
 import React from "react";
 import "./Backdrop.css";
-
-const backDrop = (props) =>
+interface OwnProps {
+    show?: boolean;
+    clicked: () => void;
+}
+const backDrop = (props: OwnProps) =>
     props.show ? (
         <div className="Backdrop" onClick={props.clicked}></div>
     ) : null;

@@ -1,7 +1,10 @@
 import React from "react";
 import "./Order.css";
 import Aux from "../../hoc/Aux/Aux";
-const Order = (props) => {
+interface OwnProps {
+    data: any;
+}
+const Order = (props: OwnProps) => {
     let transformedIngredients = null;
     if (props.data && props.data.ingredients) {
         transformedIngredients = Object.keys(props.data.ingredients).map(

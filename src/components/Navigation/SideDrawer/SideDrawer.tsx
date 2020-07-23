@@ -4,8 +4,11 @@ import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import BackDrop from "../../UI/Backdrop/Backdrop";
 import Aux from "../../../hoc/Aux/Aux";
-
-const sideDrawer = (props) => {
+interface OwnProps {
+    open: boolean;
+    closed: () => void;
+}
+const sideDrawer = (props: OwnProps) => {
     let attachedClasses = ["SideDrawer", "Close"];
     if (props.open) {
         attachedClasses = ["SideDrawer", "Open"];
