@@ -1,8 +1,9 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const intialState = {
-    ingredients: null,
+    ingredients: {},
     totalPrice: 4,
+    building: false,
 };
 
 const INGREDIENT_PRICE = {
@@ -11,6 +12,12 @@ const INGREDIENT_PRICE = {
     meat: 1.3,
     bacon: 0.7,
 };
+
+// interface IngredientAction {
+//     type: string;
+//     ingredientType?: string;
+//     ingredients?: any;
+// }
 
 const reducer = (state = intialState, action) => {
     switch (action.type) {
@@ -24,6 +31,7 @@ const reducer = (state = intialState, action) => {
                 },
                 totalPrice:
                     state.totalPrice + INGREDIENT_PRICE[action.ingredientType],
+                building: true,
             };
         }
 
@@ -37,6 +45,7 @@ const reducer = (state = intialState, action) => {
                 },
                 totalPrice:
                     state.totalPrice - INGREDIENT_PRICE[action.ingredientType],
+                building: true,
             };
         }
         case actionTypes.SET_INGREDIENT: {
@@ -44,6 +53,7 @@ const reducer = (state = intialState, action) => {
                 ...state,
                 ingredients: action.ingredients,
                 totalPrice: 4,
+                building: false,
             };
         }
         default:

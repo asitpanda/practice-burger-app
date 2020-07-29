@@ -6,15 +6,16 @@ import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axiosInstance from "../../axios-order";
 import Loader from "../../components/UI/Loader/Loader";
-import * as actionTypes from "../../store/actions/index";
+import * as actionTypes from "../../store/actions";
 import { connect } from "react-redux";
-import { RootState, stateToProps } from "../../model/ingredient";
+import { RootState, stateToProps } from "../../model/store";
 import { RouteComponentProps } from "react-router-dom";
 
 interface DispatchProps {
     addIngredient: (data: string) => void;
     removeIngredient: (type: string) => void;
-    setIngredient: (type: string) => void;
+    setIngredient: (type: any) => void;
+    onSetAuthRedirectPath: (url: string) => void;
 }
 
 interface OwnProps {
@@ -37,7 +38,12 @@ class BurgerBuilder extends Component<Props> {
     }
 
     purchaseHandler = () => {
-        this.setState({ purchasing: true });
+        if (this.props.isAuthenticated) {
+            this.setState({ purchasing: true });
+        } else {
+            this.props.onSetAuthRedirectPath("/checkout");
+            this.props.history.push("/auth");
+        }
     };
 
     purchaseCancelHandler = () => {
@@ -69,6 +75,7 @@ class BurgerBuilder extends Component<Props> {
                         price={this.props.totalPrice}
                         purchasable={this.props.totalPrice > 4}
                         ordered={this.purchaseHandler}
+                        isAuth={this.props.isAuthenticated}
                     />
                 </Aux>
             );
@@ -102,8 +109,9 @@ class BurgerBuilder extends Component<Props> {
 
 const mapStateToProps = (state: any): any => {
     return {
-        ings: state.ingredients,
-        totalPrice: state.totalPrice,
+        ings: state.burger.ingredients,
+        totalPrice: state.burger.totalPrice,
+        isAuthenticated: state.auth.token !== null,
     };
 };
 
@@ -115,6 +123,8 @@ const mapDispatchToProps = (dispatch: any) => {
             dispatch(actionTypes.removeIngredient(type)),
         setIngredient: (data: RootState) =>
             dispatch(actionTypes.setIngredient(data)),
+        onSetAuthRedirectPath: (path: string) =>
+            dispatch(actionTypes.setAuthRedirectPath(path)),
     };
 };
 

@@ -10,6 +10,7 @@ interface OwnProps {
     disabledData: { [key: string]: boolean };
     purchasable?: boolean;
     ordered: () => void;
+    isAuth?: boolean;
 }
 
 interface uiCtrl {
@@ -36,7 +37,7 @@ const buildControls = (props: OwnProps) => (
             disabled={!props.purchasable}
             onClick={props.ordered}
         >
-            ORDER NOW
+            {props.isAuth ? "ORDER NOW" : "SIGN UP TO ORDER"}
         </button>
     </div>
 );

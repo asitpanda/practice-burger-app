@@ -33,7 +33,7 @@ const Order = (props: OwnProps) => {
         <div className="Order">
             <p>Ingridents: {transformedIngredients}</p>
             <p>
-                Price: <strong>USD {props.data.totalPrice}</strong>
+                Price: <strong>USD {props.data.price}</strong>
             </p>
         </div>
     );

@@ -1,33 +1,28 @@
 import React, { Component } from "react";
 import "./Orders.css";
-import axiosInstance from "../../axios-order";
-
+import * as actionTypes from "../../store/actions";
 import Order from "../../components/Order/Order";
+import { connect } from "react-redux";
+import { RootState, stateToProps } from "../../model/store";
 
-export class Orders extends Component {
-    state = {
-        order: [],
-    };
+interface DispatchProps {
+    onFetchOrders: (userId: any, token: any) => void;
+}
+
+interface OwnProps {
+    order: any;
+}
+type Props = stateToProps & DispatchProps & OwnProps;
+
+export class Orders extends Component<Props> {
     componentDidMount() {
-        axiosInstance
-            .get("/orders.json")
-            .then((response) => {
-                const orders = [];
-                for (let key in response.data) {
-                    orders.push({
-                        ...response.data[key],
-                        id: key,
-                    });
-                }
-                this.setState({ order: orders });
-            })
-            .catch((error) => console.log(error));
+        this.props.onFetchOrders(this.props.userId, this.props.token);
     }
 
     render() {
         return (
             <div>
-                {this.state.order.map((order: any) => (
+                {this.props.orders.map((order: any) => (
                     <Order data={order} key={order.id} />
                 ))}
             </div>
@@ -35,4 +30,20 @@ export class Orders extends Component {
     }
 }
 
-export default Orders;
+const mapStateToProps = (state: RootState): stateToProps => {
+    return {
+        orders: state.order.orders,
+        loading: state.order.loading,
+        token: state.auth.token,
+        userId: state.auth.userId,
+    };
+};
+
+const mapDispatchToProps = (dispatch: any): DispatchProps => {
+    return {
+        onFetchOrders: (userId: string, token: string) =>
+            dispatch(actionTypes.fetchOrders(userId, token)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);

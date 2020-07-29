@@ -5,7 +5,7 @@ import axiosInstance from "../../../axios-order";
 import Loader from "../../../components/UI/Loader/Loader";
 import { connect } from "react-redux";
 // import TextField from "@material-ui/core/TextField";
-import { RootState, stateToProps } from "../../../model/ingredient";
+import { RootState, stateToProps } from "../../../model/store";
 import { INPUTTYPE, Validator } from "../../../model/forms";
 import { RouteComponentProps } from "react-router-dom";
 import Input from "../../../components/UI/Input/Input";
@@ -151,9 +151,10 @@ export class ContactData extends Component<Props> {
             ingredients: this.props.ings,
             price: this.props.totalPrice,
             orderData: formData,
+            userId: this.props.userId,
         };
         axiosInstance
-            .post("/orders.json", order)
+            .post("/orders.json?auth=" + this.props.token, order)
             .then((response) => {
                 this.setState({ loading: false });
                 this.props.history.push("/");
@@ -249,8 +250,10 @@ export class ContactData extends Component<Props> {
 
 const mapStateToProps = (state: RootState) => {
     return {
-        ings: state.ingredients,
-        totalPrice: state.totalPrice,
+        ings: state.burger.ingredients,
+        totalPrice: state.burger.totalPrice,
+        token: state.auth.token,
+        userId: state.auth.userId,
     };
 };
 

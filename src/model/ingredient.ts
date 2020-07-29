@@ -15,13 +15,3 @@ export const Ingridient_control = [
     { label: "Cheese", type: CONSTANT.INGREDIENT.CHEESE },
     { label: "Meat", type: CONSTANT.INGREDIENT.MEAT },
 ];
-
-export interface RootState {
-    ingredients?: any;
-    totalPrice?: number;
-}
-
-export interface stateToProps {
-    ings?: any;
-    totalPrice?: any;
-}

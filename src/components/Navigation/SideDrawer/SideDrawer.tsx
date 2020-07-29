@@ -7,6 +7,7 @@ import Aux from "../../../hoc/Aux/Aux";
 interface OwnProps {
     open: boolean;
     closed: () => void;
+    isAuth: boolean;
 }
 const sideDrawer = (props: OwnProps) => {
     let attachedClasses = ["SideDrawer", "Close"];
@@ -19,7 +20,7 @@ const sideDrawer = (props: OwnProps) => {
             <div className={attachedClasses.join(" ")}>
                 <Logo height="11%" />
                 <nav>
-                    <NavigationItems />
+                    <NavigationItems isAuthenticated={props.isAuth} />
                 </nav>
             </div>
         </Aux>
