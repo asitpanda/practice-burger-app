@@ -37,6 +37,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "test",
     "last_opened_file_path": "/media/sf_vm_share/practice-burger-app",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -56,6 +57,7 @@
       <updated>1698661392697</updated>
       <workItem from="1698661393959" duration="1555000" />
       <workItem from="1698663053926" duration="913000" />
+      <workItem from="1698666405992" duration="699000" />
     </task>
     <servers />
   </component>
@@ -67,19 +69,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="test" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
