@@ -52,7 +52,7 @@ class Auth extends Component<Props> {
                 elementConfig: {
                     label: "Password",
                     type: "password",
-                    placeholder: "Enter your Password",
+                    placeholder: "Enter your Password 1",
                 },
                 value: "",
                 validation: {
