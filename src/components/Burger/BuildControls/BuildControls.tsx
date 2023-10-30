@@ -21,7 +21,7 @@ interface uiCtrl {
 const buildControls = (props: OwnProps) => (
     <div className="BuildControls">
         <p>
-            Current Price-master-branch: <strong>{props.price.toFixed(2)}</strong>
+            Current Price1: <strong>{props.price.toFixed(2)}</strong>
         </p>
         {Ingridient_control.map((ctrl: uiCtrl) => (
             <BuildControl
