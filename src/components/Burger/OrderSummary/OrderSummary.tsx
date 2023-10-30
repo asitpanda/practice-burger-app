@@ -29,7 +29,7 @@ class OrderSummary extends Component<OwnProps> {
 
         return (
             <Aux>
-                <h3>Your Order</h3>
+                <h3>Your Order-test</h3>
                 <p>A delicious burger with the following ingredients:</p>
                 <ul>{ingredientSummary}</ul>
                 <p>Continue to checkout</p>
