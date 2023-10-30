@@ -34,7 +34,7 @@ class Auth extends Component<Props> {
                 elementType: INPUTTYPE.TEXTFIELD,
                 elementConfig: {
                     label: "Email",
-                    placeholder: "Enter your Email",
+                    placeholder: "Enter your Email 1",
                 },
                 value: "",
                 validation: {
