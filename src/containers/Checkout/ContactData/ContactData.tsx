@@ -20,7 +20,7 @@ export class ContactData extends Component<Props> {
             name: {
                 elementType: INPUTTYPE.TEXTFIELD,
                 elementConfig: {
-                    label: "Name",
+                    label: "Name m1",
                     placeholder: "Enter your Name",
                 },
                 value: "",
