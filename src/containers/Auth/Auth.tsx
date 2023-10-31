@@ -50,7 +50,7 @@ class Auth extends Component<Props> {
             password: {
                 elementType: INPUTTYPE.TEXTFIELD,
                 elementConfig: {
-                    label: "Password",
+                    label: "Password 31",
                     type: "password",
                     placeholder: "Enter your Password 1",
                 },
